@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Header() {
@@ -15,7 +14,7 @@ export default function Header() {
           <Link to="/about">
             <li>About us</li>
           </Link>
-          <Link to="/sign-in">
+          <Link to="/signin">
             <li>Sign In</li>
           </Link>
         </ul>
