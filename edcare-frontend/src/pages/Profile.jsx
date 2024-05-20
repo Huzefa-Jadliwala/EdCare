@@ -8,20 +8,26 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase.js";
 import {
+  deleteFailure,
+  deleteStart,
+  deleteSuccess,
   updateFailure,
   updateStart,
   updateSuccess,
 } from "../redux/user/userSlice.js";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, error, loading } = useSelector((state) => state.user);
   const [image, setImage] = useState(undefined);
   const [imagePercentage, setImagePercentage] = useState(0);
+  const [updateStatus, setUpdateStatus] = useState(false);
   const [formData, setFormData] = useState({});
   const [imageError, setImageError] = useState(false);
   const fileRef = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (image) {
@@ -74,8 +80,28 @@ export default function Profile() {
         return;
       }
       dispatch(updateSuccess(data));
+      setUpdateStatus(true);
     } catch (err) {
       dispatch(updateFailure());
+    }
+  };
+
+  const handleDeleteAccount = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(deleteStart());
+      const res = await fetch(`/api/user/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteFailure());
+        return;
+      }
+      dispatch(deleteSuccess());
+      navigate("/signin");
+    } catch (err) {
+      dispatch(deleteFailure());
     }
   };
 
@@ -90,7 +116,13 @@ export default function Profile() {
           accept="image/*"
           onChange={(e) => setImage(e.target.files[0])}
         ></input>
-        <p>
+        <img
+          src={formData.profilePicture || currentUser.profilePicture}
+          alt="profile"
+          className="h-24 w-24 self-center rounded-full object-cover"
+          onClick={() => fileRef.current.click()}
+        />
+        <p className="text-sm self-center">
           {imageError ? (
             <span className="text-red-700">
               Error Uploading Image(File size must be less then 2MB)
@@ -104,12 +136,6 @@ export default function Profile() {
           )}
         </p>
 
-        <img
-          src={formData.profilePicture || currentUser.profilePicture}
-          alt="profile"
-          className="h-24 w-24 self-center rounded-full object-cover"
-          onClick={() => fileRef.current.click()}
-        />
         <input
           type="text"
           id="username"
@@ -132,11 +158,22 @@ export default function Profile() {
           onChange={handleChange}
         />
         <button className="uppercase bg-slate-700 p-3 rounded-lg text-white hover:opacity-95 disabled:opacity-80">
-          Update
+          {loading ? "Loading..." : "Update"}
         </button>
         <div className="flex justify-between ">
-          <span className="text-red-700 cursor-pointer">Delete Account</span>
+          <span
+            className="text-red-700 cursor-pointer"
+            onClick={handleDeleteAccount}
+          >
+            Delete Account
+          </span>
           <span className="text-red-700 cursor-pointer">Log Out</span>
+        </div>
+        <div className="mt-2">
+          <p className="text-red-700">{error && "Something went wrong!!"}</p>
+          <p className="text-green-700">
+            {updateStatus && "User Profile Update Successful!!"}
+          </p>
         </div>
       </form>
     </div>
