@@ -7,6 +7,12 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase.js";
+import {
+  updateFailure,
+  updateStart,
+  updateSuccess,
+} from "../redux/user/userSlice.js";
+import { useDispatch } from "react-redux";
 
 export default function Profile() {
   const { currentUser } = useSelector((state) => state.user);
@@ -15,6 +21,7 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [imageError, setImageError] = useState(false);
   const fileRef = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (image) {
@@ -45,30 +52,58 @@ export default function Profile() {
     );
   };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      dispatch(updateStart());
+      const res = await fetch(`/api/user/${currentUser._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(updateFailure());
+        return;
+      }
+      dispatch(updateSuccess(data));
+    } catch (err) {
+      dispatch(updateFailure());
+    }
+  };
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
-      <input
-        type="file"
-        ref={fileRef}
-        hidden
-        accept="image/*"
-        onChange={(e) => setImage(e.target.files[0])}
-      ></input>
-      <p>
-        {imageError ? (
-          <span className="text-red-700">
-            Error Uploading Image(File size must be less then 2MB)
-          </span>
-        ) : imagePercentage > 0 && imagePercentage < 100 ? (
-          <span className="text-slate-700">{`Uploading Image: ${imagePercentage}%`}</span>
-        ) : imagePercentage === 100 ? (
-          <span className="text-green-700">Image Uploaded Successfully</span>
-        ) : (
-          ""
-        )}
-      </p>
-      <form action="" className="flex flex-col gap-4">
+      <form action="" onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <input
+          type="file"
+          ref={fileRef}
+          hidden
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files[0])}
+        ></input>
+        <p>
+          {imageError ? (
+            <span className="text-red-700">
+              Error Uploading Image(File size must be less then 2MB)
+            </span>
+          ) : imagePercentage > 0 && imagePercentage < 100 ? (
+            <span className="text-slate-700">{`Uploading Image: ${imagePercentage}%`}</span>
+          ) : imagePercentage === 100 ? (
+            <span className="text-green-700">Image Uploaded Successfully</span>
+          ) : (
+            ""
+          )}
+        </p>
+
         <img
           src={formData.profilePicture || currentUser.profilePicture}
           alt="profile"
@@ -80,18 +115,21 @@ export default function Profile() {
           id="username"
           placeholder={currentUser.username}
           className="bg-slate-100 rounded-lg p-3 mt-2"
+          onChange={handleChange}
         />
         <input
           type="email"
           id="email"
           placeholder={currentUser.email}
           className="bg-slate-100 rounded-lg p-3 mt-2"
+          onChange={handleChange}
         />
         <input
           type="password"
           id="password"
           placeholder="New Password"
           className="bg-slate-100 rounded-lg p-3 mt-2"
+          onChange={handleChange}
         />
         <button className="uppercase bg-slate-700 p-3 rounded-lg text-white hover:opacity-95 disabled:opacity-80">
           Update
