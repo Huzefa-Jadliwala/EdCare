@@ -18,6 +18,7 @@ import {
 } from "../redux/user/userSlice.js";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Profile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -29,13 +30,36 @@ export default function Profile() {
   const fileRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [locationName, setLocationName] = useState("Fetching location...");
   useEffect(() => {
     if (image) {
       handleImageUpload(image);
     }
   }, [image]);
 
+  useEffect(() => {
+    // Fetch the location name when the component mounts or when home coordinates change
+    if (currentUser.homeX && currentUser.homeY) {
+      fetchLocationName(currentUser.homeX, currentUser.homeY);
+    }
+  }, [currentUser.homeX, currentUser.homeY]);
+
+  const fetchLocationName = async (lat, lng) => {
+    try {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`
+      );
+      const address = response.data.address;
+      console.log(address);
+      const locationName = `${address.road || ""}, ${
+        address.city || address.town || address.village || ""
+      }, ${address.state || ""}, ${address.country || ""}`;
+      setLocationName(locationName);
+    } catch (error) {
+      console.error("Error fetching location name:", error);
+      setLocationName("Unknown location");
+    }
+  };
   const handleImageUpload = async (image) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + image.name;
@@ -50,6 +74,7 @@ export default function Profile() {
       },
       (error) => {
         setImageError(true);
+        console.log(error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -167,6 +192,13 @@ export default function Profile() {
           placeholder="New Password"
           className="bg-slate-100 rounded-lg p-3 mt-2"
           onChange={handleChange}
+        />
+        <input
+          type="address"
+          id="address"
+          placeholder={locationName}
+          className="bg-slate-100 rounded-lg p-3 mt-2"
+          disabled
         />
         <button className="uppercase bg-slate-700 p-3 rounded-lg text-white hover:opacity-95 disabled:opacity-80">
           {loading ? "Loading..." : "Update"}

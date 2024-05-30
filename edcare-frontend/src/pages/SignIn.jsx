@@ -33,7 +33,7 @@ export default function SignIn() {
       const data = await res.json();
 
       if (data.success === false) {
-        dispatch(signInFailure());
+        dispatch(signInFailure(error));
       }
       dispatch(signInSuccess(data));
       navigate("/");
@@ -66,7 +66,7 @@ export default function SignIn() {
         >
           {loading ? "Loading..." : "Sign In"}
         </button>
-        <OAuth/>
+        <OAuth />
       </form>
       <div className="flex gap-2 mt-5">
         <p>New User? </p>
@@ -76,7 +76,7 @@ export default function SignIn() {
       </div>
       <p className="text-red-500 mt-4">
         {" "}
-        {error ? error.message || "Something went wrong!!" : ""}
+        {error ? error.message || "Invalid Credentials !!" : ""}
       </p>
     </div>
   );

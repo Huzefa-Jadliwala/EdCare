@@ -19,7 +19,23 @@ const userSchema = new mongoose.Schema(
     profilePicture: {
       type: String,
       default:
-        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Fblank-profile-picture-mystery-man-973460%2F&psig=AOvVaw3R-4KNOW1iYKuE1tjRVbks&ust=1716214690998000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNDh3Ir0mYYDFQAAAAAdAAAAABAE",
+        "gs://edcare-92d29.appspot.com/default-avatar-icon-of-social-media-user-vector.jpg",
+    },
+    homeX: {
+      type: Number,
+      default: 0.0,
+    },
+    homeY: {
+      type: Number,
+      default: 0.0,
+    },
+    favouriteX: {
+      type: Number,
+      default: 0.0,
+    },
+    favouriteY: {
+      type: Number,
+      default: 0.0,
     },
   },
   { timestamps: true }
