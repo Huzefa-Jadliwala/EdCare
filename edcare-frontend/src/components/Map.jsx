@@ -252,7 +252,11 @@ export default function Map() {
                 position={[marker.Y, marker.X]}
                 key={marker._id}
                 icon={customJugendberufshilfen}
-              ></Marker>
+              >
+                <Popup>
+                  <InfoPopup data={marker}></InfoPopup>
+                </Popup>
+              </Marker>
             ))}
           </MarkerClusterGroup>
         )}
@@ -278,7 +282,11 @@ export default function Map() {
                 position={[marker.Y, marker.X]}
                 key={marker._id}
                 icon={customSchulsozialarbeit}
-              ></Marker>
+              >
+                <Popup>
+                  <InfoPopup data={marker}></InfoPopup>
+                </Popup>
+              </Marker>
             ))}
           </MarkerClusterGroup>
         )}
@@ -289,7 +297,11 @@ export default function Map() {
                 position={[marker.Y, marker.X]}
                 key={marker._id}
                 icon={customKindertageseinrichtungen}
-              ></Marker>
+              >
+                <Popup>
+                  <InfoPopup data={marker}></InfoPopup>
+                </Popup>
+              </Marker>
             ))}
           </MarkerClusterGroup>
         )}

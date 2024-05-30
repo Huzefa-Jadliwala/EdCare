@@ -47,22 +47,10 @@ export default function InfoPopup({ data }) {
   return (
     <div>
       <p>
-        <strong>ART:</strong> {data.ART}
+        <strong>STRASSE:</strong> {data.STRASSE || ""}
       </p>
       <p>
-        <strong>BEZEICHNUNG:</strong> {data.BEZEICHNUNG}
-      </p>
-      <p>
-        <strong>KURZBEZEICHNUNG:</strong> {data.KURZBEZEICHNUNG}
-      </p>
-      <p>
-        <strong>STRASSE:</strong> {data.STRASSE}
-      </p>
-      <p>
-        <strong>PLZ:</strong> {data.PLZ}
-      </p>
-      <p>
-        <strong>ORT:</strong> {data.ORT}
+        <strong>PLZ:</strong> {data.PLZ || ""}
       </p>
       <span className="flex items-center">
         <p className="mr-4">
@@ -71,7 +59,7 @@ export default function InfoPopup({ data }) {
         {data.TELEFON && (
           <button
             className="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-            onClick={() => handleCall(data.TELEFON)}
+            onClick={() => handleCall(data.TELEFON || "")}
           >
             Call
           </button>
@@ -84,7 +72,7 @@ export default function InfoPopup({ data }) {
         {data.EMAIL && (
           <button
             className="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-            onClick={() => handleEmail(data.EMAIL)}
+            onClick={() => handleEmail(data.EMAIL || "")}
           >
             Email
           </button>
@@ -93,12 +81,20 @@ export default function InfoPopup({ data }) {
 
       <p>
         <strong>WWW:</strong>{" "}
-        <a
-          href={data.WWW.startsWith("http") ? data.WWW : `http://${data.WWW}`}
-          target="_blank"
-        >
-          {data.WWW}
-        </a>
+        {data.WWW ? (
+          <a
+            href={
+              data.WWW.startsWith("http")
+                ? data.WWW || ""
+                : `http://${data.WWW || ""}`
+            }
+            target="_blank"
+          >
+            {data.WWW}
+          </a>
+        ) : (
+          "No Website Available"
+        )}
       </p>
       <div className="flex justify-between">
         <button
