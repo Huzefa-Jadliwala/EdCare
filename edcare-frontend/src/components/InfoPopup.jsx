@@ -10,6 +10,8 @@ import { useState } from "react";
 export default function InfoPopup({ data }) {
   const { currentUser } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({});
+  const [moreDetails, setMoreDetails] = useState(false);
+  const [details, setDetails] = useState({});
   const dispatch = useDispatch();
 
   const handleCall = (phoneNumber) => {
@@ -44,14 +46,50 @@ export default function InfoPopup({ data }) {
     }
   };
 
+  const handleMore = async () => {
+    try {
+      if (!moreDetails) {
+        setMoreDetails(true);
+        const response = await fetch(
+          `/api/data/locationDetails?lat=${data.Y}&lon=${data.X}`
+        );
+        const details = await response.json();
+        setDetails(details);
+      } else {
+        setMoreDetails(false);
+      }
+    } catch (err) {
+      setMoreDetails(false);
+      console.error("Error fetching location details:", err);
+    }
+  };
+  const renderDetails = (details) => {
+    return Object.entries(details).map(([key, value]) => (
+      <div key={key} className="my-2">
+        <strong className="uppercase">{key}:</strong>
+        {typeof value === "object" && !Array.isArray(value) ? (
+          renderDetails(value) // Recursive call for nested objects
+        ) : Array.isArray(value) ? (
+          value.map((element, index) => (
+            <div key={index} className="ml-4">
+              {typeof element === "object" ? (
+                renderDetails(element) // Recursive call for nested arrays
+              ) : (
+                <span>{element}</span>
+              )}
+            </div>
+          ))
+        ) : (
+          <span> {value}</span>
+        )}
+      </div>
+    ));
+  };
   return (
     <div>
-      <p>
-        <strong>STRASSE:</strong> {data.STRASSE || ""}
-      </p>
-      <p>
-        <strong>PLZ:</strong> {data.PLZ || ""}
-      </p>
+      <div>
+        <strong>BEZEICHNUNG:</strong> {data.BEZEICHNUNG || "No Data Available"}
+      </div>
       <span className="flex items-center">
         <p className="mr-4">
           <strong>TELEFON:</strong> {data.TELEFON || "N/A"}
@@ -96,6 +134,7 @@ export default function InfoPopup({ data }) {
           "No Website Available"
         )}
       </p>
+      {moreDetails && renderDetails(details)}
       <div className="flex justify-between">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
@@ -107,8 +146,9 @@ export default function InfoPopup({ data }) {
         <button
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
           style={{ marginLeft: "10px" }}
+          onClick={handleMore}
         >
-          More
+          {moreDetails ? "Less" : "More"}
         </button>
       </div>
     </div>
