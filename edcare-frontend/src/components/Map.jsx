@@ -245,68 +245,66 @@ export default function Map() {
             </Popup>
           </Marker>
         )}
-        <MarkerClusterGroup>
-          {JugendberufshilfenSelected && (
-            <MarkerClusterGroup>
-              {jugendberufshilfendata.map((marker) => (
-                <Marker
-                  position={[marker.Y, marker.X]}
-                  key={marker._id}
-                  icon={customJugendberufshilfen}
-                >
-                  <Popup>
-                    <InfoPopup data={marker}></InfoPopup>
-                  </Popup>
-                </Marker>
-              ))}
-            </MarkerClusterGroup>
-          )}
-          {SchulenSelected && (
-            <MarkerClusterGroup>
-              {schulendata.map((marker) => (
-                <Marker
-                  position={[marker.Y, marker.X]}
-                  key={marker._id}
-                  icon={customSchulen}
-                >
-                  <Popup>
-                    <InfoPopup data={marker}></InfoPopup>
-                  </Popup>
-                </Marker>
-              ))}
-            </MarkerClusterGroup>
-          )}
-          {SchulsozialarbeitSelected && (
-            <MarkerClusterGroup>
-              {schulsozialarbeitdata.map((marker) => (
-                <Marker
-                  position={[marker.Y, marker.X]}
-                  key={marker._id}
-                  icon={customSchulsozialarbeit}
-                >
-                  <Popup>
-                    <InfoPopup data={marker}></InfoPopup>
-                  </Popup>
-                </Marker>
-              ))}
-            </MarkerClusterGroup>
-          )}
-          {KindertageseinrichtungenSelected && (
-            <MarkerClusterGroup>
-              {kindertageseinrichtungendata.map((marker) => (
-                <Marker
-                  position={[marker.Y, marker.X]}
-                  key={marker._id}
-                  icon={customKindertageseinrichtungen}
-                >
-                  <Popup>
-                    <InfoPopup data={marker}></InfoPopup>
-                  </Popup>
-                </Marker>
-              ))}
-            </MarkerClusterGroup>
-          )}
-        </MarkerClusterGroup>
+        {JugendberufshilfenSelected && (
+          <MarkerClusterGroup>
+            {jugendberufshilfendata.map((marker) => (
+              <Marker
+                position={[marker.Y, marker.X]}
+                key={marker._id}
+                icon={customJugendberufshilfen}
+              >
+                <Popup>
+                  <InfoPopup data={marker}></InfoPopup>
+                </Popup>
+              </Marker>
+            ))}
+          </MarkerClusterGroup>
+        )}
+        {SchulenSelected && (
+          <MarkerClusterGroup>
+            {schulendata.map((marker) => (
+              <Marker
+                position={[marker.Y, marker.X]}
+                key={marker._id}
+                icon={customSchulen}
+              >
+                <Popup>
+                  <InfoPopup data={marker}></InfoPopup>
+                </Popup>
+              </Marker>
+            ))}
+          </MarkerClusterGroup>
+        )}
+        {SchulsozialarbeitSelected && (
+          <MarkerClusterGroup>
+            {schulsozialarbeitdata.map((marker) => (
+              <Marker
+                position={[marker.Y, marker.X]}
+                key={marker._id}
+                icon={customSchulsozialarbeit}
+              >
+                <Popup>
+                  <InfoPopup data={marker}></InfoPopup>
+                </Popup>
+              </Marker>
+            ))}
+          </MarkerClusterGroup>
+        )}
+        {KindertageseinrichtungenSelected && (
+          <MarkerClusterGroup>
+            {kindertageseinrichtungendata.map((marker) => (
+              <Marker
+                position={[marker.Y, marker.X]}
+                key={marker._id}
+                icon={customKindertageseinrichtungen}
+              >
+                <Popup>
+                  <InfoPopup data={marker}></InfoPopup>
+                </Popup>
+              </Marker>
+            ))}
+          </MarkerClusterGroup>
+        )}
       </MapContainer>
     </>
   );
