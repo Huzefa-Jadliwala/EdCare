@@ -185,6 +185,7 @@ export default function Profile() {
           placeholder={currentUser.email}
           className="bg-slate-100 rounded-lg p-3 mt-2"
           onChange={handleChange}
+          disabled
         />
         <input
           type="password"

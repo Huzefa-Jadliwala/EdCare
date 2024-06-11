@@ -209,9 +209,14 @@ export default function Map() {
           Schulen
         </button>
       </div>
-      <MapContainer center={[50.833332, 12.916667]} zoom={12} className="h-50">
+      <MapContainer
+        center={[50.833332, 12.916667]}
+        zoom={12}
+        className="h-50"
+      >
         <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"></TileLayer>
-        <LeafletControlGeocoder />
+        
+        {currentUser && <LeafletControlGeocoder />}
         {currentUser && currentUser.homeY && currentUser.homeX && (
           <Marker
             position={[currentUser.homeX, currentUser.homeY]}
@@ -254,7 +259,9 @@ export default function Map() {
                 icon={customJugendberufshilfen}
               >
                 <Popup>
-                  <InfoPopup data={marker}></InfoPopup>
+                  <InfoPopup
+                    data={marker}
+                  ></InfoPopup>
                 </Popup>
               </Marker>
             ))}
@@ -269,7 +276,9 @@ export default function Map() {
                 icon={customSchulen}
               >
                 <Popup>
-                  <InfoPopup data={marker}></InfoPopup>
+                  <InfoPopup
+                    data={marker}
+                  ></InfoPopup>
                 </Popup>
               </Marker>
             ))}
@@ -284,7 +293,9 @@ export default function Map() {
                 icon={customSchulsozialarbeit}
               >
                 <Popup>
-                  <InfoPopup data={marker}></InfoPopup>
+                  <InfoPopup
+                    data={marker}
+                  ></InfoPopup>
                 </Popup>
               </Marker>
             ))}
@@ -299,7 +310,9 @@ export default function Map() {
                 icon={customKindertageseinrichtungen}
               >
                 <Popup>
-                  <InfoPopup data={marker}></InfoPopup>
+                  <InfoPopup
+                    data={marker}
+                  ></InfoPopup>
                 </Popup>
               </Marker>
             ))}
