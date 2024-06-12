@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
     profilePicture: {
       type: String,
       default:
-        "gs://edcare-92d29.appspot.com/default-avatar-icon-of-social-media-user-vector.jpg",
+        "https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg",
     },
     homeX: {
       type: Number,

@@ -136,20 +136,24 @@ export default function InfoPopup({ data }) {
       </p>
       {moreDetails && renderDetails(details)}
       <div className="flex justify-between">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-          onClick={() => handleFavourite(data.X, data.Y)}
-          style={{ marginRight: "10px" }}
-        >
-          Mark as Favourite
-        </button>
-        <button
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
-          style={{ marginLeft: "10px" }}
-          onClick={handleMore}
-        >
-          {moreDetails ? "Less" : "More"}
-        </button>
+        {currentUser && (
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+            onClick={() => handleFavourite(data.X, data.Y)}
+            style={{ marginRight: "10px" }}
+          >
+            Mark as Favourite
+          </button>
+        )}
+        {currentUser && (
+          <button
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
+            style={{ marginLeft: "10px" }}
+            onClick={handleMore}
+          >
+            {moreDetails ? "Less" : "More"}
+          </button>
+        )}
       </div>
     </div>
   );

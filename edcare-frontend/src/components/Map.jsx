@@ -20,6 +20,7 @@ import {
 } from "../redux/user/userSlice";
 
 import { useSelector } from "react-redux";
+import ButtonGroup from "./ButtonGroup";
 
 export default function Map() {
   const dispatch = useDispatch();
@@ -161,61 +162,22 @@ export default function Map() {
 
   return (
     <>
-      <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
-        <button
-          className={`${
-            KindertageseinrichtungenSelected === true
-              ? "bg-slate-500"
-              : "bg-slate-100"
-          } text-black font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50`}
-          onClick={() => {
-            setKindertageseinrichtungenSelected(
-              !KindertageseinrichtungenSelected
-            );
-          }}
-        >
-          Kindertageseinrichtungen
-        </button>
-        <button
-          className={`${
-            SchulsozialarbeitSelected === true ? "bg-slate-500" : "bg-slate-100"
-          } text-black font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50`}
-          onClick={() => {
-            setSchulsozialarbeitSelected(!SchulsozialarbeitSelected);
-          }}
-        >
-          Schulsozialarbeit
-        </button>
-        <button
-          className={`${
-            JugendberufshilfenSelected === true
-              ? "bg-slate-500"
-              : "bg-slate-100"
-          } text-black font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50`}
-          onClick={() => {
-            setJugendberufshilfenSelected(!JugendberufshilfenSelected);
-          }}
-        >
-          Jugendberufshilfen
-        </button>
-        <button
-          className={`${
-            SchulenSelected === true ? "bg-slate-500" : "bg-slate-100"
-          } text-black font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50`}
-          onClick={() => {
-            setSchulenSelected(!SchulenSelected);
-          }}
-        >
-          Schulen
-        </button>
-      </div>
-      <MapContainer
-        center={[50.833332, 12.916667]}
-        zoom={12}
-        className="h-50"
-      >
+      <ButtonGroup
+        KindertageseinrichtungenSelected={KindertageseinrichtungenSelected}
+        setKindertageseinrichtungenSelected={
+          setKindertageseinrichtungenSelected
+        }
+        SchulsozialarbeitSelected={SchulsozialarbeitSelected}
+        setSchulsozialarbeitSelected={setSchulsozialarbeitSelected}
+        JugendberufshilfenSelected={JugendberufshilfenSelected}
+        setJugendberufshilfenSelected={setJugendberufshilfenSelected}
+        SchulenSelected={SchulenSelected}
+        setSchulenSelected={setSchulenSelected}
+      />
+
+      <MapContainer center={[50.833332, 12.916667]} zoom={12} className="h-50">
         <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"></TileLayer>
-        
+
         {currentUser && <LeafletControlGeocoder />}
         {currentUser && currentUser.homeY && currentUser.homeX && (
           <Marker
@@ -259,9 +221,7 @@ export default function Map() {
                 icon={customJugendberufshilfen}
               >
                 <Popup>
-                  <InfoPopup
-                    data={marker}
-                  ></InfoPopup>
+                  <InfoPopup data={marker}></InfoPopup>
                 </Popup>
               </Marker>
             ))}
@@ -276,9 +236,7 @@ export default function Map() {
                 icon={customSchulen}
               >
                 <Popup>
-                  <InfoPopup
-                    data={marker}
-                  ></InfoPopup>
+                  <InfoPopup data={marker}></InfoPopup>
                 </Popup>
               </Marker>
             ))}
@@ -293,9 +251,7 @@ export default function Map() {
                 icon={customSchulsozialarbeit}
               >
                 <Popup>
-                  <InfoPopup
-                    data={marker}
-                  ></InfoPopup>
+                  <InfoPopup data={marker}></InfoPopup>
                 </Popup>
               </Marker>
             ))}
@@ -310,9 +266,7 @@ export default function Map() {
                 icon={customKindertageseinrichtungen}
               >
                 <Popup>
-                  <InfoPopup
-                    data={marker}
-                  ></InfoPopup>
+                  <InfoPopup data={marker}></InfoPopup>
                 </Popup>
               </Marker>
             ))}
