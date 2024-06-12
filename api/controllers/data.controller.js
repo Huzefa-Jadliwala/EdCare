@@ -47,7 +47,6 @@ export const LocationDetails = async (req, res, next) => {
     // Make the request to the third-party API
     const response = await fetch(apiUrl);
     const data = await response.json();
-    console.log(data);
     // Process the response data as needed
     const locationDetails = {
       building: data.address.building || "No Data Available",

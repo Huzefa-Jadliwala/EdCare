@@ -17,9 +17,17 @@ export const Signup = async (req, res, next) => {
 
 export const Signin = async (req, res, next) => {
   try {
+    console.log("buga");
     const { email, password } = req.body;
     const validUser = await User.findOne({ email });
-    if (!validUser) return next(errorHandler(404, "User not Found!!"));
+    console.log("bugaa");
+    console.log(validUser);
+    if (!validUser) {
+      console.log("jkndsc");
+      console.log(next(errorHandler(404, "User not Found!!")))
+      return next(errorHandler(404, "User not Found!!"));
+      console.log("jkndsc");
+    }
     const validPassword = bcrypt.compareSync(password, validUser.password);
     if (!validPassword)
       return next(errorHandler(401, "Invalid user credentials."));
@@ -30,6 +38,7 @@ export const Signin = async (req, res, next) => {
       .status(200)
       .json(rest);
   } catch (error) {
+    console.log("bug");
     next(error);
   }
 };

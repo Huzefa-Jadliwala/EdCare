@@ -5,8 +5,6 @@ import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import dataRoutes from "./routes/data.route.js";
 import cookieParser from "cookie-parser";
-import swaggerUi from "swagger-ui-express";
-import specs from "./swagger.js";
 dotenv.config();
 
 mongoose
@@ -31,11 +29,9 @@ app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/data", dataRoutes);
 
-// Serve Swagger UI
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
+  const statusCode = err.statusCode || 400;
   const message = err.message || "Internal Server Error";
   return res.status(statusCode).json({
     success: false,
