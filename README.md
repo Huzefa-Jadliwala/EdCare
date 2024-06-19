@@ -1,6 +1,6 @@
-# Edcare Chemnitz
+# EdCare Chemnitz
 
-Edcare Chemnitz is a comprehensive data management and visualization system for educational and social services. It integrates data from multiple sources, represented in CSV files, into a MongoDB database and provides a robust API to manage and access this data. The platform features user authentication, data importation, and dynamic visualization using mapping technologies.
+EdCare Chemnitz is a comprehensive data management and visualization system for educational and social services. It integrates data from multiple sources, represented in CSV files, into a MongoDB database and provides a robust API to manage and access this data. The platform features user authentication, data importation, and dynamic visualization using mapping technologies.
 
 ## Table of Contents
 1. [Features](#features)
@@ -27,7 +27,7 @@ Edcare Chemnitz is a comprehensive data management and visualization system for 
 - **Database**: MongoDB
 - **Authentication**: JWT, bcrypt
 - **API Documentation**: APIDOG
-- **Mapping**: Leaflet.js, Mapbox
+- **Mapping**: Leaflet.js
 
 ## System Requirements
 ### Hardware Requirements
@@ -48,62 +48,116 @@ Edcare Chemnitz is a comprehensive data management and visualization system for 
 - Latency: Low-latency network connection for fast response times
 
 ## Installation
-1. **Clone the Repository**:
-    ```bash
-    git clone https://github.com/yourusername/edcare-chemnitz.git
-    cd edcare-chemnitz
-    ```
 
-2. **Install Backend Dependencies**:
-    ```bash
-    cd backend
-    npm install
-    ```
+Follow these steps to set up and run the EdCare application:
 
-3. **Install Frontend Dependencies**:
-    ```bash
-    cd ../frontend
-    npm install
-    ```
+### 1. Clone the Repository
+
+First, clone the repository from GitHub:
+
+```bash
+git clone https://github.com/Huzefa-Jadliwala/EdCare.git
+cd EdCare
+```
+
+### 2. Download Data Files
+
+Download the data files and store them in the `Data` directory:
+
+- **Schools (Grundschule, Oberschule, Förderschule, Gymnasium, Berufsbildende Schule, …)**: [Download here](#)
+- **Kindergarten (Kindertageseinrichtungen)**: [Download here](#)
+- **Social Child Projects (Schulsozialarbeit)**: [Download here](#)
+- **Social Teenager Projects (Jugendberufshilfe)**: [Download here](#)
+
+Store these files in the `Data` directory.
+
+### 3. Install Backend Dependencies
+
+Navigate to the `api` directory and install the necessary dependencies:
+
+```bash
+cd api
+npm install
+```
+
+### 4. Install Frontend Dependencies
+
+Navigate to the `edcare-frontend` directory and install the necessary dependencies:
+
+```bash
+cd ../edcare-frontend
+npm install
+```
+
+### 5. Install Python Dependencies
+
+Navigate to the `Data` directory and install the necessary Python libraries:
+
+```bash
+cd ../Data
+pip install pymongo pandas python-dotenv
+```
 
 ## Configuration
-1. **Backend Configuration**:
-    - Create a `.env` file in the `backend` directory with the following environment variables:
-        ```env
-        MONGO_URI=your_mongodb_connection_string
-        JWT_SECRET=your_jwt_secret
-        GOOGLE_CLIENT_ID=your_google_client_id
-        GOOGLE_CLIENT_SECRET=your_google_client_secret
-        ```
 
-2. **Frontend Configuration**:
-    - Create a `.env` file in the `frontend` directory with the following environment variables:
-        ```env
-        REACT_APP_API_URL=http://localhost:5000/api
-        REACT_APP_GOOGLE_CLIENT_ID=your_google_client_id
-        ```
+### Backend Configuration
+
+Create a `.env` file in the `api` directory with the following environment variables:
+
+```env
+Mongo="mongodb+srv://huzijadli:Q3wbNfqxz8hCa2Gj@cluster0.jmwo6kk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+JWT_SECRET="dvsdcsdvwe323e2dw2312wsq"
+```
+
+### Frontend Configuration
+
+Create a `.env` file in the `edcare-frontend` directory with the following environment variables:
+
+```env
+VITE_FIREBASE_API_KEY="AIzaSyDvZ1miVZb8dAfJsgkdd5xhkgnn2s_0dBI"
+```
 
 ## Running the Application
-1. **Start the Backend Server**:
-    ```bash
-    cd backend
-    npm start
-    ```
 
-2. **Start the Frontend Server**:
-    ```bash
-    cd ../frontend
-    npm start
-    ```
+### 1. Load Data into MongoDB
 
-3. **Access the Application**:
-    - Open your web browser and go to `http://localhost:3000`.
+Navigate to the `Data` directory and run the `load_data.py` script to load all the data into the database:
+
+```bash
+cd ../Data
+python load_data.py
+```
+
+### 2. Start the Backend Server
+
+Navigate to the `api` directory and start the backend server:
+
+```bash
+cd ../api
+npm start
+```
+
+### 3. Start the Frontend Server
+
+Navigate to the `edcare-frontend` directory and start the frontend server:
+
+```bash
+cd ../edcare-frontend
+npm start
+```
+
+## Access the Application
+
+Open your web browser and go to (https://apidog.com/apidoc/shared-9b63d092-7b2b-4af2-a6fd-eef37dda334a).
 
 ## API Documentation
+
 - The API documentation is generated using APIDOG and can be accessed at `http://localhost:5000/api-docs`.
 
 ## Contributing
+
 We welcome contributions from the community. Please fork the repository and submit a pull request with your changes.
 
 ## License
+
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
