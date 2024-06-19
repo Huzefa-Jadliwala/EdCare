@@ -64,10 +64,10 @@ cd EdCare
 
 Download the data files and store them in the `Data` directory:
 
-- **Schools (Grundschule, Oberschule, Förderschule, Gymnasium, Berufsbildende Schule, …)**: [Download here](#)
-- **Kindergarten (Kindertageseinrichtungen)**: [Download here](#)
-- **Social Child Projects (Schulsozialarbeit)**: [Download here](#)
-- **Social Teenager Projects (Jugendberufshilfe)**: [Download here](#)
+- **Schools (Grundschule, Oberschule, Förderschule, Gymnasium, Berufsbildende Schule, …)**: [Download here](https://portal-chemnitz.opendata.arcgis.com/datasets/chemnitz::schulen/about)
+- **Kindergarten (Kindertageseinrichtungen)**: [Download here](https://portal-chemnitz.opendata.arcgis.com/datasets/chemnitz::kindertageseinrichtungen/about)
+- **Social Child Projects (Schulsozialarbeit)**: [Download here](https://portal-chemnitz.opendata.arcgis.com/datasets/chemnitz::schulsozialarbeit/about)
+- **Social Teenager Projects (Jugendberufshilfe)**: [Download here](https://portal-chemnitz.opendata.arcgis.com/datasets/chemnitz::jugendberufshilfen/about)
 
 Store these files in the `Data` directory.
 
@@ -133,7 +133,7 @@ python load_data.py
 Navigate to the `api` directory and start the backend server:
 
 ```bash
-cd ../api
+cd ../
 npm start
 ```
 
